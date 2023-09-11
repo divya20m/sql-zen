@@ -1,0 +1,61 @@
+
+CREATE TABLE Users (
+    user_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    username NOT NULL,
+    password_hash NOT NULL,
+    email  NOT NULL,
+    first_name TEXT,
+    last_name TEXT
+);
+
+
+CREATE TABLE Courses (
+    course_id INTEGER PRIMARY KEY,
+    course_name TEXT NOT NULL,
+    instructor_id INTEGER,
+    description TEXT,
+    start_date DATE,
+    end_date DATE,
+    FOREIGN KEY (instructor_id) REFERENCES Users(user_id)
+);
+
+
+CREATE TABLE Enrollments (
+    enrollment_id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    course_id INTEGER,
+    enrollment_date DATE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+
+CREATE TABLE JOINING (
+    lesson_id INTEGER PRIMARY KEY,
+    course_id INTEGER,
+    lesson_timing INTEGER
+    lesson_title NOT NULL,
+    lesson_content TEXT,
+    lesson_date DATE,
+    lesson_link TEXT,
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+
+CREATE TABLE Assignments (
+    assignment_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    course_id INTEGER,
+    assignment_title VARCHAR(255) NOT NULL,
+    assignment_description TEXT,
+    assignment_due_date DATE,
+    assignment_backendlink TEXT,
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+CREATE TABLE Instructors (
+    instructor_id INTEGER PRIMARY KEY,
+    specialization VARCHAR(255),
+    biography TEXT,
+    -- Add other instructor-related fields here
+    FOREIGN KEY (instructor_id) REFERENCES Users(user_id)
+);
